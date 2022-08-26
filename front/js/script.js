@@ -6,30 +6,28 @@ fetch("http://localhost:3000/api/products")
     })
     
     .then(function(data) {
-        // console.log(data[0]._id)
-        // document.getElementById('items').innerHTML = '<a href="./product.html?id=' + data[0]._id + '">'
     
         for (let article of data) {
     
-            var ProductLink = document.createElement("a");
+            const ProductLink = document.createElement("a");
             document.getElementById('items').appendChild(ProductLink);
             ProductLink.href = "./product.html?id=" + article._id;
     
-            var ProductArticle = document.createElement("article");
+            const ProductArticle = document.createElement("article");
             ProductLink.appendChild(ProductArticle);
     
-            var ProductImg = document.createElement("img");
+            const ProductImg = document.createElement("img");
             ProductArticle.appendChild(ProductImg);
             ProductImg.src = article.imageUrl;
             ProductImg.alt = article.altTxt;
     
-            var ProductTitle = document.createElement("h3");
+            const ProductTitle = document.createElement("h3");
              ProductArticle.appendChild(ProductTitle);
-            ProductTitle.innerHTML = article.name;
+            ProductTitle.innerText = article.name;
     
-            var ProductDescr = document.createElement("p");
+            const ProductDescr = document.createElement("p");
             ProductArticle.appendChild(ProductDescr);
-            ProductDescr.innerHTML = article.description;
+            ProductDescr.innerText = article.description;
                     
         }
      })
