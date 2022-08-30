@@ -1,4 +1,5 @@
-fetch("http://localhost:3000/api/products")
+function getApi() {
+    fetch("http://localhost:3000/api/products")
     .then(function(response){
         if (response.ok) {
             return response.json();
@@ -35,3 +36,6 @@ fetch("http://localhost:3000/api/products")
     .catch(function(error) {
     console.log('Fetch Error:', error);
     });
+}
+
+getApi();
