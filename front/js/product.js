@@ -34,7 +34,7 @@ function getProduct(idUrl) {
      })
     
     .catch(function(error) {
-    console.log('Fetch Error:', error);
+    console.error('Fetch Error:', error);
     });
 }
 
