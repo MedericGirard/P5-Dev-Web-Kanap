@@ -2,6 +2,7 @@ const str = document.location.href;
 const url = new URL(str);
 const idUrl = url.searchParams.get("id");
 
+// Récupération des données de article via l'API et insertion du dom
 function getProduct(idUrl) {
   fetch("http://localhost:3000/api/products/" + idUrl)
     .then(function (response) {
@@ -34,6 +35,7 @@ function getProduct(idUrl) {
     });
 }
 
+// Gestion du panier
 function addToCart() {
   const quantity = parseFloat(document.getElementById("quantity").value, 10);
   const colors = document.getElementById("colors").value;

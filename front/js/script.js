@@ -1,3 +1,4 @@
+// Récupération des données de article via l'API et insertion du dom
 function getApi() {
   fetch("http://localhost:3000/api/products")
     .then(function (response) {

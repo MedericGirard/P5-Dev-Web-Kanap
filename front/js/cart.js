@@ -3,6 +3,8 @@ let cart = JSON.parse(cartLocalStorage);
 const positionCart = document.getElementById("cart__items");
 let totalQuantity = cart.length;
 let Totalprice = 0;
+
+// Configuration des regex
 let RegEx = new RegExp("^[A-Za-zàâäéèêëïîôöùûüç'-]+$");
 let cityRegExp = new RegExp("^[A-Za-zàâäéèêëïîôöùûüç '-]+$");
 let emailRegExp = new RegExp(
@@ -12,6 +14,7 @@ let addressRegExp = new RegExp(
   "^[0-9]{1,3}(?:(?:[,. ]){1}[-A-Za-zàâäéèêëïîôöùûüç]+)+"
 );
 
+// Récupération du local storage
 function getCartProduct() {
   fetch("http://localhost:3000/api/products")
     .then(function (response) {
@@ -24,6 +27,7 @@ function getCartProduct() {
       for (product of cart) {
         const api = data.find((cart) => cart._id === product.id);
 
+        // Insertion des éléments html dans la page
         const cartArticle = document.createElement("article");
         positionCart.appendChild(cartArticle);
         cartArticle.classList.add("cart__item");
@@ -106,6 +110,7 @@ function getCartProduct() {
     });
 }
 
+// Calcul du prix total
 function calcTotalPrice(api, index, value) {
   if (value > index) {
     Totalprice = Totalprice + value * api.price - index * api.price;
@@ -119,6 +124,7 @@ function calcTotalPrice(api, index, value) {
   document.getElementById("totalPrice").innerText = Totalprice;
 }
 
+// Modification d'une quantité de produit
 function quantityChange(api) {
   const checkQuantity = document.querySelectorAll(".itemQuantity");
   checkQuantity.forEach((target) => {
@@ -144,6 +150,7 @@ function quantityChange(api) {
   });
 }
 
+// Suppression d'un produit
 function deleteItem(api) {
   const supprimer = document.querySelectorAll(".deleteItem");
   supprimer.forEach((target) => {
@@ -162,6 +169,7 @@ function deleteItem(api) {
   });
 }
 
+// Validation du prénom
 function validFirstName(inputFirstName) {
   const firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
   if (RegEx.test(inputFirstName)) {
@@ -173,6 +181,7 @@ function validFirstName(inputFirstName) {
   }
 }
 
+// Validation du nom
 function validLastName(inputLastName) {
   const firstNameErrorMsg = document.getElementById("lastNameErrorMsg");
   if (RegEx.test(inputLastName)) {
@@ -184,6 +193,7 @@ function validLastName(inputLastName) {
   }
 }
 
+// Validation de l'adresse
 function validAdress(inputAdress) {
   const firstNameErrorMsg = document.getElementById("addressErrorMsg");
   if (addressRegExp.test(inputAdress)) {
@@ -195,6 +205,7 @@ function validAdress(inputAdress) {
   }
 }
 
+// Validation de la ville
 function validCity(inputCity) {
   const firstNameErrorMsg = document.getElementById("cityErrorMsg");
   if (cityRegExp.test(inputCity)) {
@@ -207,6 +218,7 @@ function validCity(inputCity) {
   }
 }
 
+// Validation de l'email
 function validEmail(inputEmail) {
   const firstNameErrorMsg = document.getElementById("emailErrorMsg");
   if (emailRegExp.test(inputEmail)) {
@@ -218,6 +230,7 @@ function validEmail(inputEmail) {
   }
 }
 
+// Envoi des informations client au localstorage après validation
 function submitForm(event) {
   event.preventDefault();
 
@@ -260,7 +273,6 @@ function submitForm(event) {
         }
       })
       .then(function (data) {
-        console.log(data);
         localStorage.clear();
         document.location.href = `confirmation.html?id=${data.orderId}`;
       });
