@@ -64,7 +64,7 @@ function addToCart() {
     }
     window.localStorage.setItem("cart", JSON.stringify(cart));
   } else {
-    alert("Veuillez entrer une valeur comprise entre 0 et 100 ou entière");
+    alert("Veuillez entrer une valeur entière comprise entre 1 et 100 et une couleur");
   }
 }
 getProduct(idUrl);
