@@ -6,12 +6,12 @@ let Totalprice = 0;
 
 // Configuration des regex
 let RegEx = new RegExp("^[A-Za-zàâäéèêëïîôöùûüç'-]+$");
-let cityRegExp = new RegExp("^[A-Za-zàâäéèêëïîôöùûüç '-]+$");
+let cityRegExp = new RegExp("^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$");
 let emailRegExp = new RegExp(
   "^[A-Za-z0-9.-_]+[@]{1}[A-Za-z0-9.-_]+[.]{1}[a-z]{2,}$"
 );
 let addressRegExp = new RegExp(
-  "^[0-9]{1,3}(?:(?:[,. ]){1}[-A-Za-zàâäéèêëïîôöùûüç]+)+"
+  "^[#.0-9a-zA-Z\s,-]+$"
 );
 
 // Récupération du local storage
@@ -133,7 +133,8 @@ function quantityChange(api) {
     let color = article.dataset.color;
     target.addEventListener("change", () => {
       let index = cart.find((cart) => cart.id === id && cart.color === color);
-      if (target.value > 0 && target.value !== index.quantity) {
+      const checkQuantity = parseFloat(target.value);
+      if (target.value > 0 && target.value !== index.quantity && Number.isInteger(checkQuantity) && target.value <= 100 ) {
         if (target.value > index.quantity) {
           calcTotalPrice(api, index.quantity, target.value);
         } else if (target.value < index.quantity) {
@@ -141,9 +142,9 @@ function quantityChange(api) {
         }
         index.quantity = target.value;
         localStorage.setItem("cart", JSON.stringify(cart));
-      } else if (target.value <= 0) {
+      } else if (target.value <= 0 ||  target.value >= 100 || Number.isInteger(checkQuantity) == false ) {
         alert(
-          "Veuillez entrer une valeur supérieur à 0 ou cliquez sur le boutton supprimer afin de le retirer du panier"
+          "Veuillez entrer une valeur supérieur à 0 et entière ou cliquez sur le boutton supprimer afin de le retirer du panier"
         );
       }
     });
@@ -176,7 +177,7 @@ function validFirstName(inputFirstName) {
     firstNameErrorMsg.innerText = "";
     return true;
   } else {
-    firstNameErrorMsg.innerText = "Veuillez saisir un prénom sans espace";
+    firstNameErrorMsg.innerText = "Veuillez saisir un prénom valide";
     return false;
   }
 }
@@ -188,7 +189,7 @@ function validLastName(inputLastName) {
     firstNameErrorMsg.innerText = "";
     return true;
   } else {
-    firstNameErrorMsg.innerText = "Veuillez saisir un nom sans espace";
+    firstNameErrorMsg.innerText = "Veuillez saisir un nom valide";
     return false;
   }
 }
@@ -200,7 +201,7 @@ function validAdress(inputAdress) {
     firstNameErrorMsg.innerText = "";
     return true;
   } else {
-    firstNameErrorMsg.innerText = "Veuillez saisir une adresse avec un numéro";
+    firstNameErrorMsg.innerText = "Veuillez saisir une adress valide";
     return false;
   }
 }
@@ -213,7 +214,7 @@ function validCity(inputCity) {
     return true;
   } else {
     firstNameErrorMsg.innerText =
-      "Veuillez saisir une ville sans chiffre ni caractères spéciaux";
+      "Veuillez saisir une ville valide";
     return false;
   }
 }

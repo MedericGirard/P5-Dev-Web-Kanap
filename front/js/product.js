@@ -63,6 +63,7 @@ function addToCart() {
       cart.push({ id: idUrl, quantity: quantity, color: colors });
     }
     window.localStorage.setItem("cart", JSON.stringify(cart));
+    alert("Produit ajouté au panier")
   } else {
     alert("Veuillez entrer une valeur entière comprise entre 1 et 100 et une couleur");
   }
